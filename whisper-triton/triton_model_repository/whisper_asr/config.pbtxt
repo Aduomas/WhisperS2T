@@ -1,0 +1,63 @@
+name: "whisper_asr"
+backend: "python"
+max_batch_size: 16
+
+dynamic_batching {
+  preferred_batch_size: [4, 8, 16]
+  max_queue_delay_microseconds: 5000
+}
+
+input [
+  {
+    name: "AUDIO_CONTENT"
+    data_type: TYPE_FP32
+    dims: [-1]
+  },
+  {
+    name: "LANGUAGE_CODE"
+    data_type: TYPE_STRING
+    dims: [1]
+  },
+  {
+    name: "TASK"
+    data_type: TYPE_STRING
+    dims: [1]
+  },
+  {
+    name: "WORD_TIMESTAMPS"
+    data_type: TYPE_BOOL
+    dims: [1]
+    optional: true
+  },
+  {
+    name: "INITIAL_PROMPT"
+    data_type: TYPE_STRING
+    dims: [1]
+    optional: true
+  }
+]
+
+output [
+  {
+    name: "TRANSCRIPTION"
+    data_type: TYPE_STRING
+    dims: [1]
+  },
+  {
+    name: "WORD_TIMESTAMPS"
+    data_type: TYPE_STRING
+    dims: [1]
+  }
+]
+
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU
+  }
+]
+
+parameters {
+  key: "EXECUTION_ENV_PATH"
+  value: {string_value: "/opt/conda/bin/python"}
+}
