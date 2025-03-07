@@ -26,6 +26,8 @@ _MODELS = {
     "large-v2": "Systran/faster-whisper-large-v2",
     "large-v3": "Systran/faster-whisper-large-v3",
     "large": "Systran/faster-whisper-large-v3",
+    "large-v3-german": "primeline/whisper-large-v3-german",
+    "large-v3-french": "bofenghuang/whisper-large-v3-french",
 }
 
 
